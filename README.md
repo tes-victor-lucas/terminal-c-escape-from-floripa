@@ -1,4 +1,4 @@
-# Plataforma C
+# Terminal C: escape from Floripa
 
 **Estilo: Roguelike**
 
