@@ -1,0 +1,63 @@
+{
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "buildings-1.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "floor_and_buildings-01.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "floor_and_walls-1.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "neo-zero-floor_and_walls.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 3
+        },
+        "neo_zero_buildings.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 3
+        },
+        "objects_and_items-01.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1.5
+        },
+        "room01.json": {
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 386.66666666666663,
+                "y": 197.66666666666669
+            }
+        }
+    },
+    "last.imagePath": "/home/lucas/Faculdade/semestre-5/TES/terminal-c-escape-from-floripa/Assets/neo_zero_V1.0",
+    "map.height": 40,
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 50,
+    "openFiles": [
+    ],
+    "project": "maps.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "room01.json",
+        "objects_and_items-01.tsx",
+        "floor_and_walls-1.tsx",
+        "floor_and_buildings-01.tsx",
+        "buildings-1.tsx",
+        "neo_zero_buildings.tsx",
+        "neo-zero-floor_and_walls.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
