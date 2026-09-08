@@ -8,3 +8,11 @@
 
 **Premissa curta**:
 No ano de 2067, uma IA (Floria) assumiu o controle do Centro de Florianópolis para otimizar a decadente mobilidade urbana manézinha. Agora drones de fiscalização, patinetes elétricos e a Guarda Municipal com implantes cibernéticos perseguem qualquer pessoa que tente atravessar a cidade. Seu objetivo? Chegar até a plataforma C do Ticen, e pegar um 763.2 via Kobrasol, fugindo de Florianópolis.
+
+## Como rodar
+
+1. É necessário ter node instalado no computador
+2. Clone o repositório e entre no repositório
+3. Dê o comando "npm install" ou "npm i"
+4. Dê o comando "npm run dev"
+5. Entre em http://localhost:1234/
