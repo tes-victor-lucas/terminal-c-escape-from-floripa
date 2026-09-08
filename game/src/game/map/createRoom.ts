@@ -7,6 +7,9 @@ const TILESETS = [
 ] as const;
 
 const LAYER_NAMES = ['floor', 'wall', 'wall-stores', 'objects'] as const;
+const FOREGROUND_DEPTH = 20;
+// Os postes usam três tiles verticais: somente os dois primeiros devem ocultar o jogador.
+const POST_FOREGROUND_TILE_INDICES = new Set([758, 768]);
 
 export interface Room {
     map: Phaser.Tilemaps.Tilemap;
@@ -40,6 +43,21 @@ export function createRoom(scene: Scene, mapKey: string): Room | null {
     for (const layer of collisionLayers) {
         layer.setCollisionByProperty({ collider: true });
     }
+
+    const objectsLayer = collisionLayers[LAYER_NAMES.indexOf('objects')];
+    const postForegroundLayer = map.createBlankLayer('post-foreground', resolvedTilesets, 0, 0);
+
+    if (!postForegroundLayer) {
+        console.error(`Não foi possível criar a camada de primeiro plano do ${mapKey}.`);
+        return null;
+    }
+
+    objectsLayer.forEachTile((tile) => {
+        if (POST_FOREGROUND_TILE_INDICES.has(tile.index)) {
+            postForegroundLayer.putTileAt(tile.index, tile.x, tile.y);
+        }
+    });
+    postForegroundLayer.setDepth(FOREGROUND_DEPTH);
 
     scene.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
