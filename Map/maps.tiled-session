@@ -1,8 +1,12 @@
 {
     "activeFile": "",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        "#floor_and_buildings-01": {
+            "scaleInDock": 1
+        },
         "buildings-1.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -27,34 +31,57 @@
             "scaleInDock": 1.5,
             "scaleInEditor": 1.5
         },
+        "room-01.json": {
+            "scale": 1,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 482.5,
+                "y": 415
+            }
+        },
+        "room-01.json#floor_and_buildings-01": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "room-01.json#floor_and_walls-1": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "room-01.json#objects_and_items-01": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
         "room01.json": {
-            "scale": 1.5,
+            "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 386.66666666666663,
-                "y": 197.66666666666669
+                "x": 352,
+                "y": 174.5
             }
         }
     },
-    "last.imagePath": "/home/lucas/Faculdade/semestre-5/TES/terminal-c-escape-from-floripa/Assets/neo_zero_V1.0",
+    "last.imagePath": "/home/lucas/Faculdade/semestre-5/TES/terminal-c-escape-from-floripa/game/public/assets/tilesets",
     "map.height": 40,
     "map.lastUsedFormat": "json",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "map.width": 50,
     "openFiles": [
+        "room-01.json"
     ],
     "project": "maps.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "room01.json",
+        "room-01.json",
         "objects_and_items-01.tsx",
+        "room01.json",
         "floor_and_walls-1.tsx",
         "floor_and_buildings-01.tsx",
         "buildings-1.tsx",
         "neo_zero_buildings.tsx",
         "neo-zero-floor_and_walls.tsx"
     ],
+    "tileset.embedInMap": true,
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 16,
