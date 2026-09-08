@@ -1,0 +1,17 @@
+# Dependências
+node_modules/
+
+# Parcel
+.parcel-cache/
+dist/
+
+# Variáveis de ambiente
+.env
+.env.*
+
+# Logs
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
