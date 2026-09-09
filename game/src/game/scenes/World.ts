@@ -65,7 +65,12 @@ export class World extends Scene {
                 ? sprite.y <= edgeMargin
                 : sprite.y >= this.room.map.heightInPixels - edgeMargin;
 
-            if (reachedEdge) {
+            const velocityY = sprite.body?.velocity.y ?? 0;
+            const isMovingTowardsEdge = transition.edge === 'top'
+                ? velocityY < 0
+                : velocityY > 0;
+
+            if (reachedEdge && isMovingTowardsEdge) {
                 this.scene.restart({
                     roomKey: transition.to,
                     spawn: transition.spawn
