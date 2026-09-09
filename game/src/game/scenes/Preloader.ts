@@ -27,6 +27,11 @@ export class Preloader extends Scene {
         );
 
         this.load.image(
+            'floor_and_walls-03',
+            'assets/tilesets/floor_and_walls-03.png'
+        );
+
+        this.load.image(
             'objects',
             'assets/tilesets/objects_and_items-01.png'
         );

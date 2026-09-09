@@ -4,6 +4,7 @@ import { createLampLights } from './createLampLights';
 const TILESETS = [
     { mapName: 'floor_and_buildings-01', textureKey: 'floor_and_buildings' },
     { mapName: 'floor_and_walls-1', textureKey: 'floor_and_walls' },
+    { mapName: 'floor_and_walls-03', textureKey: 'floor_and_walls-03' },
     { mapName: 'objects_and_items-01', textureKey: 'objects' }
 ] as const;
 
