@@ -1,5 +1,5 @@
 export const WORLD_CONFIG = {
-    initialRoomKey: 'room2',
+    initialRoomKey: 'room1',
     rooms: {
         room1: {
             mapKey: 'room1',
@@ -7,7 +7,8 @@ export const WORLD_CONFIG = {
                 {
                     edge: 'top',
                     to: 'room2',
-                    spawn: { x: 184, y: 608 },
+                    // O jogador chega dois tiles antes da borda para não acionar o retorno no mesmo frame.
+                    spawn: { x: 184, y: 576 },
                     xMin: 144,
                     xMax: 224
                 }
@@ -19,7 +20,8 @@ export const WORLD_CONFIG = {
                 {
                     edge: 'bottom',
                     to: 'room1',
-                    spawn: { x: 184, y: 32 },
+                    // Mesmo afastamento ao voltar para a room01.
+                    spawn: { x: 184, y: 64 },
                     xMin: 144,
                     xMax: 224
                 }
