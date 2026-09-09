@@ -13,6 +13,7 @@ No ano de 2067, uma IA (Floria) assumiu o controle do Centro de Florianópolis p
 
 1. É necessário ter node instalado no computador
 2. Clone o repositório e entre no repositório
-3. Dê o comando "npm install" ou "npm i"
-4. Dê o comando "npm run dev"
-5. Entre em http://localhost:1234/
+3. Entre na pasta 'game' -> cd game
+4. Dê o comando "npm install" ou "npm i"
+5. Dê o comando "npm run dev"
+6. Entre em http://localhost:1234/
