@@ -4,6 +4,9 @@
         "."
     ],
     "fileStates": {
+        "": {
+            "scaleInDock": 0.125
+        },
         "#floor_and_buildings-01": {
             "scaleInDock": 1
         },
@@ -47,6 +50,9 @@
             "scaleInDock": 3,
             "scaleInEditor": 1
         },
+        "room-01.json#light-teste": {
+            "scaleInEditor": 1
+        },
         "room-01.json#objects_and_items-01": {
             "scaleInDock": 1.5,
             "scaleInEditor": 1
@@ -60,7 +66,7 @@
             }
         }
     },
-    "last.imagePath": "/home/lucas/Faculdade/semestre-5/TES/terminal-c-escape-from-floripa/game/public/assets/tilesets",
+    "last.imagePath": "/home/victor/Área de trabalho/IFSC-2026.2/TES/terminal-c-escape-from-floripa/Assets/Effects",
     "map.height": 40,
     "map.lastUsedFormat": "json",
     "map.tileHeight": 16,
@@ -84,7 +90,7 @@
     "tileset.embedInMap": true,
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 16,
-        "width": 16
+        "height": 4,
+        "width": 4
     }
 }
