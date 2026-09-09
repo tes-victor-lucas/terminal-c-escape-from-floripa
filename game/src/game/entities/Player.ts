@@ -1,4 +1,5 @@
 import type { Scene } from 'phaser';
+import { FootstepAudio } from '../audio/FootstepAudio';
 import { WORLD_CONFIG } from '../config/world';
 
 export type Direction = 'up' | 'down' | 'left' | 'right';
@@ -12,6 +13,7 @@ const WALK_FRAMES: Record<Direction, number[]> = {
 };
 
 type MovementKeys = Record<Direction, Phaser.Input.Keyboard.Key>;
+type MovementDirection = { x: number; y: number };
 
 /** Reúne o estado e o comportamento controlável do personagem. */
 export class Player {
@@ -19,7 +21,13 @@ export class Player {
 
     private readonly cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     private readonly wasd: MovementKeys;
+    private readonly footsteps: FootstepAudio;
     private facing: Direction = 'down';
+    /**
+     * `body.blocked` é limpo pelo Arcade Physics antes do próximo passo. Guardamos
+     * a direção que bateu para não tentar avançar e bater de novo a cada quadro.
+     */
+    private blockedDirection?: MovementDirection;
 
     constructor(private readonly scene: Scene) {
         const keyboard = scene.input.keyboard;
@@ -45,27 +53,50 @@ export class Player {
             left: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
             right: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
         };
+        this.footsteps = new FootstepAudio(scene);
     }
 
-    update() {
+    update(delta: number) {
         const direction = this.getMovementDirection();
         const { x, y } = direction;
+        const isReceivingMovementInput = x !== 0 || y !== 0;
 
-        this.sprite.setVelocity(x * WORLD_CONFIG.player.speed, y * WORLD_CONFIG.player.speed);
-
-        if (x === 0 && y === 0) {
-            this.sprite.anims.stop();
-            this.setIdleFrame();
+        if (!isReceivingMovementInput) {
+            this.blockedDirection = undefined;
+            this.sprite.setVelocity(0, 0);
+            this.footsteps.update(false, delta);
+            this.stopWalkingAnimation();
             return;
         }
 
-        this.facing = Math.abs(x) > Math.abs(y)
-            ? (x < 0 ? 'left' : 'right')
-            : (y < 0 ? 'up' : 'down');
+        if (this.isMovementBlocked(direction)) {
+            this.blockedDirection = direction;
+        }
+
+        if (this.isHoldingBlockedDirection(direction)) {
+            this.sprite.setVelocity(0, 0);
+            this.footsteps.stop();
+            this.stopWalkingAnimation();
+            return;
+        }
+
+        this.updateVelocity(direction, delta);
+
+        // A velocidade foi resolvida pelo passo de física deste quadro. Assim,
+        // encostar em uma parede não inicia animação nem um novo som de passo.
+        const isMoving = this.getCurrentSpeed() > WORLD_CONFIG.player.stopThreshold;
+        this.footsteps.update(isMoving, delta);
+
+        if (!isMoving) {
+            this.stopWalkingAnimation();
+            return;
+        }
+
+        this.facing = this.getFacingDirection(x, y);
 
         const animationKey = `player-walk-${this.facing}`;
         if (this.sprite.anims.currentAnim?.key !== animationKey || !this.sprite.anims.isPlaying) {
-            this.sprite.anims.play(animationKey, true);
+            this.playWalkAnimation(animationKey);
         }
     }
 
@@ -94,6 +125,97 @@ export class Player {
         }
 
         return { x, y };
+    }
+
+    private updateVelocity(direction: MovementDirection, delta: number) {
+        const { speed, velocityResponsiveness } = WORLD_CONFIG.player;
+        const interpolation = 1 - Math.exp(-velocityResponsiveness * delta / 1000);
+        const body = this.sprite.body;
+        const targetX = direction.x * speed;
+        const targetY = direction.y * speed;
+
+        if (!(body instanceof Phaser.Physics.Arcade.Body)) {
+            this.sprite.setVelocity(targetX, targetY);
+            return;
+        }
+
+        this.sprite.setVelocity(
+            Phaser.Math.Linear(body.velocity.x, targetX, interpolation),
+            Phaser.Math.Linear(body.velocity.y, targetY, interpolation)
+        );
+    }
+
+    private getCurrentSpeed() {
+        const body = this.sprite.body;
+
+        if (!(body instanceof Phaser.Physics.Arcade.Body)) {
+            return 0;
+        }
+
+        return Math.hypot(body.velocity.x, body.velocity.y);
+    }
+
+    private isMovementBlocked(direction: MovementDirection) {
+        const body = this.sprite.body;
+
+        if (
+            (direction.x === 0 && direction.y === 0)
+            || !(body instanceof Phaser.Physics.Arcade.Body)
+        ) {
+            return false;
+        }
+
+        const isHorizontalMovementBlocked = direction.x === 0
+            || (direction.x < 0 ? body.blocked.left : body.blocked.right);
+        const isVerticalMovementBlocked = direction.y === 0
+            || (direction.y < 0 ? body.blocked.up : body.blocked.down);
+
+        return isHorizontalMovementBlocked && isVerticalMovementBlocked;
+    }
+
+    private isHoldingBlockedDirection(direction: MovementDirection) {
+        if (!this.blockedDirection) {
+            return false;
+        }
+
+        const isSameDirection = direction.x === this.blockedDirection.x
+            && direction.y === this.blockedDirection.y;
+
+        if (!isSameDirection) {
+            this.blockedDirection = undefined;
+        }
+
+        return isSameDirection;
+    }
+
+    private getFacingDirection(x: number, y: number) {
+        const { directionThreshold } = WORLD_CONFIG.player;
+        const horizontal = Math.abs(x);
+        const vertical = Math.abs(y);
+
+        if (horizontal > vertical + directionThreshold) {
+            return x < 0 ? 'left' : 'right';
+        }
+
+        if (vertical > horizontal + directionThreshold) {
+            return y < 0 ? 'up' : 'down';
+        }
+
+        return this.facing;
+    }
+
+    private playWalkAnimation(animationKey: string) {
+        const currentFrame = this.sprite.anims.currentFrame;
+        const startFrame = this.sprite.anims.isPlaying && currentFrame
+            ? currentFrame.index - 1
+            : 0;
+
+        this.sprite.anims.play({ key: animationKey, startFrame }, true);
+    }
+
+    private stopWalkingAnimation() {
+        this.sprite.anims.stop();
+        this.setIdleFrame();
     }
 
     private createAnimations() {
