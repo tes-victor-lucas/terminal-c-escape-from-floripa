@@ -11,6 +11,11 @@ export class Preloader extends Scene {
             'assets/maps/room01.json'
         );
 
+        this.load.tilemapTiledJSON(
+            'room2',
+            'assets/maps/room02.json'
+        );
+
         this.load.image(
             'floor_and_buildings',
             'assets/tilesets/floor_and_buildings-01.png'

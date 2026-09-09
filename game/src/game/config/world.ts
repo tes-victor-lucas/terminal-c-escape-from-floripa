@@ -1,5 +1,31 @@
 export const WORLD_CONFIG = {
-    mapKey: 'room1',
+    initialRoomKey: 'room2',
+    rooms: {
+        room1: {
+            mapKey: 'room1',
+            transitions: [
+                {
+                    edge: 'top',
+                    to: 'room2',
+                    spawn: { x: 184, y: 608 },
+                    xMin: 144,
+                    xMax: 224
+                }
+            ]
+        },
+        room2: {
+            mapKey: 'room2',
+            transitions: [
+                {
+                    edge: 'bottom',
+                    to: 'room1',
+                    spawn: { x: 184, y: 32 },
+                    xMin: 144,
+                    xMax: 224
+                }
+            ]
+        }
+    },
     player: {
         x: 104,
         y: 88,
@@ -20,3 +46,5 @@ export const WORLD_CONFIG = {
         lerpY: 0.15
     }
 } as const;
+
+export type RoomKey = keyof typeof WORLD_CONFIG.rooms;
