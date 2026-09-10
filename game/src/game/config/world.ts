@@ -7,6 +7,9 @@ export const WORLD_CONFIG = {
         initialFrame: 120,
         scale: 0.7,
         speed: 120,
+        velocityResponsiveness: 14,
+        stopThreshold: 2,
+        directionThreshold: 0.15,
         hitbox: {
             width: 8,
             height: 5,

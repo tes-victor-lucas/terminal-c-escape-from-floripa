@@ -1,4 +1,5 @@
 import { Scene } from 'phaser';
+import { AUDIO_CONFIG } from '../config/audio';
 
 export class Preloader extends Scene {
     constructor() {
@@ -30,6 +31,11 @@ export class Preloader extends Scene {
             'player-walk',
             'assets/character.png',
             { frameWidth: 38, frameHeight: 38 }
+        );
+
+        this.load.audio(
+            AUDIO_CONFIG.playerFootstep.key,
+            AUDIO_CONFIG.playerFootstep.path
         );
     }
 

@@ -24,7 +24,7 @@ export class World extends Scene {
         configureWorldCamera(this, room.map, this.player.sprite);
     }
 
-    update() {
-        this.player?.update();
+    update(_time: number, delta: number) {
+        this.player?.update(delta);
     }
 }
